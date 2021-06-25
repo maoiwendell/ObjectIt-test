@@ -1,0 +1,23 @@
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Home</title>
+  </head>
+  <body>
+    {% include "dashboard.html" %}
+      {% for car in all_car %}
+      <table>
+        <tr>
+        <td> {{car.sellerName}} </td>
+        <td> {{car.sellerNumber}} </td>
+        <td> {{car.carMaker}} </td>
+        <td> {{car.carModel}} </td>
+        <td> {{car.carYear}} </td>
+        <td> {{car.carCondition}} </td>
+        <td> {{car.carPrice}} </td>
+        </tr>
+      {% endfor %}
+
+  </body>
+
+</html>
