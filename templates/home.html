@@ -28,7 +28,13 @@
           <td> {{car.carYear}} </td>
           <td> {{car.carCondition}} </td>
           <td> {{car.carPrice}} </td>
-          <td> <a href="{% url 'sale' car_id=car.id %}" class="btn btn-success">Buy</a> </td>
+          <td>
+            {% if car.sale_set.exists %}
+              <b> Sold </b>
+            {% else %}
+              <a href="{% url 'sale' car_id=car.id %}" class="btn btn-success">Buy</a>
+            {% endif %}
+          </td>
         </tr>
       {% endfor %}
       </tbody>
