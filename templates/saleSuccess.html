@@ -1,0 +1,12 @@
+{% include "dashboard.html" %}
+<h1>Thank you for filling up the form</h1>
+<h2>Iron mike will be intouch</h2>
+<h3>You will be redirected to homepage in 5 seconds.</h3>
+<h4>Otherwise click <a href="/">Here </a></h4>
+<script>
+setTimeout(function() {
+  console.log("timeout initiated")
+  window.location.href = "{% url 'home' %}";
+ // Do something after 5 seconds
+}, 5000);
+</script>

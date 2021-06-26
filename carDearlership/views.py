@@ -1,9 +1,9 @@
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
-from carDearlership.models import CarForm, Car
+from carDearlership.models import CarForm, Car, Sale, SaleForm
 from django.contrib.auth import authenticate, login
-
+from django.core.mail import send_mail
 
 
 
@@ -18,7 +18,7 @@ def home(request):
         cars= carpaginator.page(1)
     except EmptyPage:
         cars= carpaginator.page(carpaginator.num_pages)
-    return render(request, 'home.html',{'all_car':cars})
+    return render(request, 'home.html',{'cars':cars})
 
 
 def list(request):
@@ -34,3 +34,51 @@ def list(request):
         form = CarForm()
 
     return render(request, 'listCar.html', {'form':form})
+
+def sale(request,car_id):
+    form = SaleForm()
+
+    if request.method == 'POST':
+        form = SaleForm(request.POST)
+        if form.is_valid():
+
+            sale = form.save(commit=False)
+            sale.car_id = car_id
+            sale.save()
+            car = sale.car
+            import logging
+            #logging.info
+            body = f"Car {sale.car_id} has been sold " + \
+                       f"Greetings see details below" + \
+                       f"Make:  {car.carMake} "+ \
+                       f"Model: {car.carModel} "+ \
+                       f"Year:  {car.carYear} "+ \
+                       f"Condition: {car.carCondition} "+  \
+                       f"Seller Name: {car.sellerName} "+  \
+                       f"Seller Contact info: {car.sellerNumber}"+ \
+                       f"Price: {car.carPrice} "+ \
+                       f"Buyer Name: {sale.buyerName} "+\
+                       f"Buyer Contact info: {sale.buyerInfo} "+\
+                       f"Commission: { (car.carPrice*0.05)} "+\
+                       f"Net Amount: { (car.carPrice*0.95)} "
+            send_mail(
+                'A car has been sold',
+                body,
+                'from@example.com',
+                ['to@example.com'],
+                fail_silently=False
+            )
+        return render(request, 'saleSuccess.html')
+    else:
+        form = SaleForm()
+        return render(request,'sale.html',{'form':form})
+
+
+
+ #  return redirect('home')
+
+
+    #if form.is_valid():
+    #sale = form.save(commit=False)
+#    sale.car_id = car_id
+    #sale.save()

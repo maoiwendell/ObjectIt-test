@@ -6,7 +6,7 @@ class CarTestCase(TestCase):
         Car.objects.create(
             sellerName="Jane Doe",
             sellerNumber="645215253",
-            carMaker="Mitsubishi",
+            carMake="Mitsubishi",
             carModel="rev",
             carYear="1975",
             carCondition="fair",

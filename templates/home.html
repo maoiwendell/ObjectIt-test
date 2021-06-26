@@ -10,23 +10,25 @@
         <tr>
           <th>Seller Name</th>
           <th>Seller Number</th>
-          <th>Car Maker</th>
-          <th>Car Model</th>
-          <th>Car Year</th>
-          <th>Car Condition</th>
-          <th>Car Price</th>
+          <th>Make</th>
+          <th>Model</th>
+          <th>Year</th>
+          <th>Condition</th>
+          <th>Asking Price</th
+          <th>Status</th>
         </tr>
       </thead>
       <tbody>
-      {% for car in all_car %}
+      {% for car in cars %}
         <tr>
           <td> {{car.sellerName}} </td>
           <td> {{car.sellerNumber}} </td>
-          <td> {{car.carMaker}} </td>
+          <td> {{car.carMake}} </td>
           <td> {{car.carModel}} </td>
           <td> {{car.carYear}} </td>
           <td> {{car.carCondition}} </td>
           <td> {{car.carPrice}} </td>
+          <td> <a href="{% url 'sale' car_id=car.id %}" class="btn btn-success">Buy</a> </td>
         </tr>
       {% endfor %}
       </tbody>
@@ -37,7 +39,7 @@
         <a href="?page={{ cars.previous_page_number }}">previous</a>
       {% endif %}
       <span class="current">
-        Page {{ contacts.number }} of {{ cars.paginator.num_pages }}.
+        Page {{ cars.number }} of {{ cars.paginator.num_pages }}.
       </span>
       {% if cars.has_next %}
         <a href="?page={{ cars.next_page_number }}">next</a>
