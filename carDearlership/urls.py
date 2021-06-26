@@ -25,5 +25,6 @@ urlpatterns = [
     path('list/', views.list, name="list"),
     path('accounts/', include('django.contrib.auth.urls')),
     path('sale/<int:car_id>/',views.sale, name="sale" ),
+    path('available/<int:car_id>/',views.available, name="available" ),
 
 ]

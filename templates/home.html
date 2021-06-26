@@ -31,6 +31,9 @@
           <td>
             {% if car.sale_set.exists %}
               <b> Sold </b>
+              <a href="{% url 'available' car_id=car.id %}" class="btn btn-success">
+                Make Available
+              </a>
             {% else %}
               <a href="{% url 'sale' car_id=car.id %}" class="btn btn-success">Buy</a>
             {% endif %}

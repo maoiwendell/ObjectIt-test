@@ -73,9 +73,17 @@ def sale(request,car_id):
         form = SaleForm()
         return render(request,'sale.html',{'form':form})
 
+def available(request,car_id):
+#    if(Sale.object.get(car_id=carListed_id)
+    sales = Sale.objects.filter(car_id=car_id)
+    if sales:
+        sales.delete()
 
+    #sale.delete()
 
- #  return redirect('home')
+#    availableCar = Sale.object.get(car=car_id)
+#    availableCar
+    return redirect('home')
 
 
     #if form.is_valid():
