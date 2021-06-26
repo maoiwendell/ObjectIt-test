@@ -1,6 +1,19 @@
 {% include "dashboard.html" %}
-<form action="" method="post">
-    {% csrf_token %}
-    {{form | linebreaksbr}} </h1>
-    <input type="submit" value="Submit">
-</form>
+{%load crispy_forms_tags%}
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+    </div>
+    <div class="col-sm-8">
+      <form action="" method="post">
+          {% csrf_token %}
+          {{form | crispy}}
+          <button type="submit" class="btn btn-success">Submit</button>
+      </form>
+    </div>
+    <div class="col-sm">
+    </div>
+  </div>
+</div>
+
+<!--|crispy-->

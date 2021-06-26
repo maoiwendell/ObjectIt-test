@@ -14,7 +14,7 @@ class Car(models.Model):
         (EXCELLENT, 'Excellent'),
     ]
     sellerName = models.CharField(max_length=30)
-    sellerNumber = models.IntegerField()
+    sellerNumber = models.CharField(max_length=30)
     carMaker = models.CharField(max_length=30)
     carModel = models.CharField(max_length=30)
     carYear = models.CharField(max_length=4)

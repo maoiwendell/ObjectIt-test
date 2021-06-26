@@ -5,19 +5,44 @@
   </head>
   <body>
     {% include "dashboard.html" %}
-      {% for car in all_car %}
-      <table>
+    <table class="table table-bordered">
+      <thead>
         <tr>
-        <td> {{car.sellerName}} </td>
-        <td> {{car.sellerNumber}} </td>
-        <td> {{car.carMaker}} </td>
-        <td> {{car.carModel}} </td>
-        <td> {{car.carYear}} </td>
-        <td> {{car.carCondition}} </td>
-        <td> {{car.carPrice}} </td>
+          <th>Seller Name</th>
+          <th>Seller Number</th>
+          <th>Car Maker</th>
+          <th>Car Model</th>
+          <th>Car Year</th>
+          <th>Car Condition</th>
+          <th>Car Price</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for car in all_car %}
+        <tr>
+          <td> {{car.sellerName}} </td>
+          <td> {{car.sellerNumber}} </td>
+          <td> {{car.carMaker}} </td>
+          <td> {{car.carModel}} </td>
+          <td> {{car.carYear}} </td>
+          <td> {{car.carCondition}} </td>
+          <td> {{car.carPrice}} </td>
         </tr>
       {% endfor %}
-
+      </tbody>
+    </table>
+    <div class="pagination">
+      <span class="step-links">
+      {% if cars.has_previous %}
+        <a href="?page={{ cars.previous_page_number }}">previous</a>
+      {% endif %}
+      <span class="current">
+        Page {{ contacts.number }} of {{ cars.paginator.num_pages }}.
+      </span>
+      {% if cars.has_next %}
+        <a href="?page={{ cars.next_page_number }}">next</a>
+      {% endif %}
+      </span>
+    </div>
   </body>
-
 </html>

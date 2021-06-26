@@ -2,6 +2,9 @@ from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 from carDearlership.models import CarForm, Car
+from django.contrib.auth import authenticate, login
+
+
 
 
 def home(request):
