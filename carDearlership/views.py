@@ -7,18 +7,28 @@ from django.core.mail import send_mail
 
 
 
-def home(request):
+#def home(request,order_by):
+#    if order_by.is_invalid():
+#        order_by = '-carMake'
 
-    all_cars = Car.objects.all()
-    carpaginator = Paginator(all_cars , 10)
-    page = request.GET.get('page')
-    try:
-        cars= carpaginator.page(page)
-    except PageNotAnInteger:
-        cars= carpaginator.page(1)
-    except EmptyPage:
-        cars= carpaginator.page(carpaginator.num_pages)
-    return render(request, 'home.html',{'cars':cars})
+
+def home(request):
+#    if order_by.is_invalid():
+#        order_by = '-carMake'
+        order_by = request.GET.get('order_by', '-carMake')
+        all_cars = Car.objects.all().order_by(order_by)
+
+        carpaginator = Paginator(all_cars , 10)
+        page = request.GET.get('page')
+        try:
+            cars= carpaginator.page(page)
+        except PageNotAnInteger:
+            cars= carpaginator.page(1)
+        except EmptyPage:
+            cars= carpaginator.page(carpaginator.num_pages)
+        return render(request, 'home.html',{'cars':cars})
+
+
 
 
 def list(request):
