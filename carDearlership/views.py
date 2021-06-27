@@ -5,18 +5,10 @@ from carDearlership.models import CarForm, Car, Sale, SaleForm
 from django.contrib.auth import authenticate, login
 from django.core.mail import send_mail
 
-
-
-#def home(request,order_by):
-#    if order_by.is_invalid():
-#        order_by = '-carMake'
-
-
 def home(request):
-#    if order_by.is_invalid():
-#        order_by = '-carMake'
         order_by = request.GET.get('order_by', '-carMake')
         all_cars = Car.objects.all().order_by(order_by)
+        # all_cars = []
 
         carpaginator = Paginator(all_cars , 10)
         page = request.GET.get('page')
@@ -28,13 +20,8 @@ def home(request):
             cars= carpaginator.page(carpaginator.num_pages)
         return render(request, 'home.html',{'cars':cars})
 
-
-
-
 def list(request):
     form = CarForm()
-    #return HttpResponse('list')
-    #return render(request,'listCar.html',{'form':form})
     if request.method == 'POST':
         form = CarForm(request.POST)
         if form.is_valid():
@@ -47,17 +34,13 @@ def list(request):
 
 def sale(request,car_id):
     form = SaleForm()
-
     if request.method == 'POST':
         form = SaleForm(request.POST)
         if form.is_valid():
-
             sale = form.save(commit=False)
             sale.car_id = car_id
             sale.save()
             car = sale.car
-            import logging
-            #logging.info
             body = f"Car {sale.car_id} has been sold " + \
                        f"Greetings see details below" + \
                        f"Make:  {car.carMake} "+ \
@@ -84,19 +67,8 @@ def sale(request,car_id):
         return render(request,'sale.html',{'form':form})
 
 def available(request,car_id):
-#    if(Sale.object.get(car_id=carListed_id)
     sales = Sale.objects.filter(car_id=car_id)
     if sales:
         sales.delete()
 
-    #sale.delete()
-
-#    availableCar = Sale.object.get(car=car_id)
-#    availableCar
     return redirect('home')
-
-
-    #if form.is_valid():
-    #sale = form.save(commit=False)
-#    sale.car_id = car_id
-    #sale.save()

@@ -5,7 +5,7 @@
   </head>
   <body>
     {% include "dashboard.html" %}
-    {% if cars.count != 0 %}
+    {% if cars %}
       <table class="table table-bordered">
         <thead>
           <tr>
@@ -67,7 +67,7 @@
         </span>
       </div>
     {% else %}
-      No results found for your ﬁlter.
+      <p class="text-center body"> No results found for your ﬁlter.</p>
     {% endif %}
   </body>
 </html>
