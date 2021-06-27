@@ -5,65 +5,69 @@
   </head>
   <body>
     {% include "dashboard.html" %}
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>Seller Name</th>
-          <th>Seller Number</th>
-          <th>
-            Make
-            <a href="?order_by=-carMake" class="btn btn-warning">
-            <a href="?order_by=carMake" class="btn btn-warning">
-          </th>
-          <th>Model</th>
-          <th>
-            Year
-            <a href="?order_by=-carYear" class="btn btn-warning">
-            <a href="?order_by=carYear" class="btn btn-warning">
-          </th>
-          <th>Condition</th>
-          <th>Asking Price</th
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for car in cars %}
-        <tr>
-          <td> {{car.sellerName}} </td>
-          <td> {{car.sellerNumber}} </td>
-          <td> {{car.carMake}} </td>
-          <td> {{car.carModel}} </td>
-          <td> {{car.carYear}} </td>
-          <td> {{car.carCondition}} </td>
-          <td> {{car.carPrice}} </td>
-          <td>
-            {% if car.sale_set.exists %}
-              <b> Sold </b>
-              {% if user.is_authenticated %}
-                <a href="{% url 'available' car_id=car.id %}" class="btn btn-warning">
-                  Make Available
-                </a>
+    {% if cars.count != 0 %}
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Seller Name</th>
+            <th>Seller Number</th>
+            <th>
+              Make
+              <a href="?order_by=-carMake" class="btn btn-secondary">Descending</a>
+              <a href="?order_by=carMake" class="btn btn-secondary">Ascending</a>
+            </th>
+            <th>Model</th>
+            <th>
+              Year
+              <a href="?order_by=-carYear" class="btn btn-secondary">Descending</a>
+              <a href="?order_by=carYear" class="btn btn-secondary">Ascending</a>
+            </th>
+            <th>Condition</th>
+            <th>Asking Price</th
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for car in cars %}
+          <tr>
+            <td> {{car.sellerName}} </td>
+            <td> {{car.sellerNumber}} </td>
+            <td> {{car.carMake}} </td>
+            <td> {{car.carModel}} </td>
+            <td> {{car.carYear}} </td>
+            <td> {{car.carCondition}} </td>
+            <td> {{car.carPrice}} </td>
+            <td>
+              {% if car.sale_set.exists %}
+                <b> Sold </b>
+                {% if user.is_authenticated %}
+                  <a href="{% url 'available' car_id=car.id %}" class="btn btn-warning">
+                    Make Available
+                  </a>
+                {% endif %}
+              {% else %}
+                <a href="{% url 'sale' car_id=car.id %}" class="btn btn-success">Buy</a>
               {% endif %}
-            {% else %}
-              <a href="{% url 'sale' car_id=car.id %}" class="btn btn-success">Buy</a>
-            {% endif %}
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    <div class="pagination">
-      <span class="step-links">
-      {% if cars.has_previous %}
-        <a href="?page={{ cars.previous_page_number }}">previous</a>
-      {% endif %}
-      <span class="current">
-        Page {{ cars.number }} of {{ cars.paginator.num_pages }}.
-      </span>
-      {% if cars.has_next %}
-        <a href="?page={{ cars.next_page_number }}">next</a>
-      {% endif %}
-      </span>
-    </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <div class="pagination">
+        <span class="step-links">
+        {% if cars.has_previous %}
+          <a href="?page={{ cars.previous_page_number }}">previous</a>
+        {% endif %}
+        <span class="current">
+          Page {{ cars.number }} of {{ cars.paginator.num_pages }}.
+        </span>
+        {% if cars.has_next %}
+          <a href="?page={{ cars.next_page_number }}">next</a>
+        {% endif %}
+        </span>
+      </div>
+    {% else %}
+      No results found for your ﬁlter.
+    {% endif %}
   </body>
 </html>
